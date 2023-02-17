@@ -26,6 +26,8 @@ app.get('/api/notes', (request, response) => {
 app.post('/api/persons', (request, response, next) => {
   const body = request.body;
 
+  const personEmail = body.email;
+  const personPassword = body.password;
   const personName = body.name;
   const personNumber = body.number;
 
@@ -36,6 +38,8 @@ app.post('/api/persons', (request, response, next) => {
   }
 
   const person = new Person({
+    email: personEmail,
+    password: personPassword,
     name: personName,
     number: personNumber,
   });

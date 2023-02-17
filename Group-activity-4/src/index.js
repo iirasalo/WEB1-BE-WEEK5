@@ -23,9 +23,11 @@ app.get('/api/notes', (request, response) => {
   });
 });
 
-app.post('/api/persons', (request, response, next) => {
+app.post('/api/persons', async (request, response, next) => {
   const body = request.body;
-
+  const password = body.password;
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
   if (Object.keys(body).length === 0) {
     return response.status(400).json({
       error: 'content missing',
@@ -34,7 +36,7 @@ app.post('/api/persons', (request, response, next) => {
 
   const person = new Person({
     email: body.email,
-    password: body.password,
+    password: passwordHash,
     name: body.name,
     number: body.number,
   });

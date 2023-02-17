@@ -24,14 +24,23 @@ mongoose
     console.log('error connecting to MongoDB:', error.message);
   });
 
-const personSchema = new mongoose.Schema({
-  name: {
-    type: String,
-  },
-  number: {
-    type: String,
-  },
-});
+  const personSchema = new mongoose.Schema({
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+    },
+    number: {
+      type: String,
+    },
+  });
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
