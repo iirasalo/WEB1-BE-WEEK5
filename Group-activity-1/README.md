@@ -13,27 +13,15 @@
   - Examples:
 
 ```http
+GET http://localhost:4000/api/workouts
+```
+
+```http
 POST http://localhost:4000/api/workouts
 {
     "title":"Workout 1",
     "reps":40,
     "load":10
-}
-```
-
-```http
-POST http://localhost:4000/api/user/signup
-{
-    "email": "sami@sami.fi",
-    "password": "45RFgh##@$"
-}
-```
-
-```http
-POST http://localhost:4000/api/user/login
-{
-    "email": "mirja@mirja.fi",
-    "password": "45RFgh##@$"
 }
 ```
 

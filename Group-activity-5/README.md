@@ -11,6 +11,7 @@ Inside the `src` directory
 ```text
 MONGODB_URI=mongodb+srv://tivi:SqZsopHbsRtRDO24@cluster0.1x4ks.mongodb.net/groupnr?retryWrites=true&w=majority
 PORT=4000
+SECRET=mysecretepassword
 ```
 
 > In `MONGODB_URI`, replace `groupnr` to rfelect your group e.g `group1` , `group2` etc
@@ -24,7 +25,7 @@ npm run dev
 
 ## Task 2
 
-1. In `./index.js` replace lines 26-40 with the following:
+1. In `./index.js` replace lines 27-52 with the following:
 
 ```js
 app.post('/api/persons', async (request, response, next) => {
@@ -32,6 +33,7 @@ app.post('/api/persons', async (request, response, next) => {
   const password = body.password;
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
+
   if (Object.keys(body).length === 0) {
     return response.status(400).json({
       error: 'content missing',
@@ -45,11 +47,18 @@ app.post('/api/persons', async (request, response, next) => {
     number: body.number,
   });
 
+  const token = jwt.sign({ email: body.email }, process.env.SECRET, {
+    expiresIn: '1h',
+  });
+
   person
     .save()
     .then((savedPerson) => savedPerson.toJSON())
     .then((savedAndFormattedPerson) => {
-      response.json(savedAndFormattedPerson);
+      response.json({
+        token,
+        savedAndFormattedPerson,
+      });
     })
     .catch((error) => next(error));
 });
@@ -63,14 +72,9 @@ POST http://localhost:4000/api/persons
 
 ```json
 {
-  "email": "matti7@matti7.com",
+  "email": "matti8@matti8.com",
   "password": "45RFgh##@$",
   "name": "Matti",
   "number": "09-345-234"
 }
 ```
-
-## Task 3
-
-- What is Hashing?
-- What is the Rainbow Table Attack and how can we protect against it?
