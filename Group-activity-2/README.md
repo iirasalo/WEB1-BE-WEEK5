@@ -33,3 +33,4 @@ async function test() {
 ## Task 2
 
 - Does the code from the first group activity use async/await?
+YES. async and await prsent.
