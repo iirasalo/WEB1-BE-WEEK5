@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-
+const bcrypt = require('bcrypt');
 const Note = require('./models/note');
 const Person = require('./models/person');
 
@@ -26,9 +26,6 @@ app.get('/api/notes', (request, response) => {
 app.post('/api/persons', (request, response, next) => {
   const body = request.body;
 
-  const personName = body.name;
-  const personNumber = body.number;
-
   if (Object.keys(body).length === 0) {
     return response.status(400).json({
       error: 'content missing',
@@ -36,8 +33,10 @@ app.post('/api/persons', (request, response, next) => {
   }
 
   const person = new Person({
-    name: personName,
-    number: personNumber,
+    email: body.email,
+    password: body.password,
+    name: body.name,
+    number: body.number,
   });
 
   person
@@ -61,6 +60,8 @@ app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body;
 
   const person = {
+    email: body.email,
+    password: body.password,
     name: body.name,
     number: body.number,
   };
