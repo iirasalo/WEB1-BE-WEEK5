@@ -40,4 +40,7 @@ POST http://localhost:4000/api/user/login
 ## Task 2
 
 - What is MVC?
-- Does the code in the `src` folder follow the MVC pattern?
+MVC (Model-View-Controller) is a pattern in software design commonly used to implement user interfaces, data, and controlling logic. It emphasizes a separation between the software's business logic and display.
+
+- Does the code in the `src` folder follow the MVC pattern? YES.
+
