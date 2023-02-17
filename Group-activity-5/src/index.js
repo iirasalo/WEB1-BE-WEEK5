@@ -29,6 +29,7 @@ app.post('/api/persons', async (request, response, next) => {
   const password = body.password;
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
+
   if (Object.keys(body).length === 0) {
     return response.status(400).json({
       error: 'content missing',
@@ -42,11 +43,18 @@ app.post('/api/persons', async (request, response, next) => {
     number: body.number,
   });
 
+  const token = jwt.sign({ email: body.email }, process.env.SECRET, {
+    expiresIn: '1h',
+  });
+
   person
     .save()
     .then((savedPerson) => savedPerson.toJSON())
     .then((savedAndFormattedPerson) => {
-      response.json(savedAndFormattedPerson);
+      response.json({
+        token,
+        savedAndFormattedPerson,
+      });
     })
     .catch((error) => next(error));
 });

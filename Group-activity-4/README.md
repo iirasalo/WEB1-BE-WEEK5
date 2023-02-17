@@ -75,7 +75,7 @@ POST http://localhost:4000/api/persons
 - What is Hashing?
 
 Hashing turns your password into a short string of letters / numbers using an encryption algorithm. If a website is hacked, cyber criminals don't get access to your password. Instead, they just get access to the encrypted “hash” created by your password. 
-    Salting adds random data to the hashed password.
+    Salting adds random data to the plain text password before hashing.
 
 - What is the Rainbow Table Attack and how can we protect against it?
 

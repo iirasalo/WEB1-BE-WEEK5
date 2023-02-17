@@ -122,6 +122,18 @@ app.get('/api/notes/:id', (request, response, next) => {
     .catch((error) => next(error));
 });
 
+app.get('/api/notes/:id', (request, response, next) => {
+  Person.findById(request.params.id)
+    .then((person) => {
+      if (person) {
+        response.json(person);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
+});
+
 app.delete('/api/notes/:id', (request, response, next) => {
   Note.findByIdAndRemove(request.params.id)
     .then((result) => {
